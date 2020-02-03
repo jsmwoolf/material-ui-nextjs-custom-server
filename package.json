@@ -12,16 +12,13 @@
     "@material-ui/core": "^4.9.0",
     "@zeit/next-css": "^1.0.1",
     "koa": "^2.11.0",
+    "koa-router": "^8.0.6",
     "koa-session": "^5.12.3",
     "next": "^9.2.1",
+    "next-koa": "^1.0.9",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.5",
     "typeface-roboto": "0.0.75"
-  },
-  "devDependencies": {
-    "babel-plugin-styled-components": "^1.10.7"
   }
 }

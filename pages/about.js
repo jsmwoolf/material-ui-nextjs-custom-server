@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Index() {
+export default function About() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 

@@ -1,38 +1,35 @@
-const koa = require('koa');
-const session = require('koa-session');
-const next = require('next');
-const router = require('@koa/router')();
+// server/index.js
 
-const dev = process.env.NODE_ENV !== 'production';
+const NextKoa = require('next-koa')
+const Koa = require('koa')
+const Router = require('koa-router')
+const path = require('path')
 
-const app = next({ dev, preserveLog: true });
-const handle = app.getRequestHandler();
+const app = new Koa()
+const router = new Router()
+const nextApp = NextKoa({
+  dev: process.env.NODE_ENV !== 'production'
+})
 
-app.prepare().then(() => {
-    let server = new koa();
-    const debug = require('debug')(server)
-    server.use(session(server));
+// console nextConfig
+console.log(nextApp.nextConfig);
+console.log(nextApp);
 
-    router.get('/', async (ctx, next) => {
-        console.log("Generate dashboard...");
-        await handle(ctx.req, ctx.res);
-    });
-    
-    server.use(router.routes());
+app.use(nextApp.middleware);
 
-    server.listen(3000, () => {
-        console.log('Now listening...');
-    })
-});
-
-//const handle = app.getRequestHandler();
-/*
+// using renderer of next.js to emit pages/about.tsx
+// the state can be captured by next-koa/getstate package
+// and is rendered as ctx.state merged by this data
+// here data usually is a plain object
 router.get('/', async (ctx, next) => {
-    await next();
-    ctx.respond = false;
-    ctx.res.statusCode = 200;
-
-    console.log("Hello World");
-    return "Hello World"
+    await ctx.render('about')//nextApp.handle(ctx.req, ctx.res);
 });
-*/
+
+
+app.use(router.routes());
+// if nextConfig.useFileSystemPublicRoutes is missing or true
+// then you can get any page under `pages` by directly fetching
+// the pathname without defining the koa routes
+
+app.listen(3000)
+console.log('Now listening...');
